@@ -10,8 +10,8 @@ const bucketName = 'mywebsitestatic';
 
 /**
  * Bucket's policy
- * To create a bucket as static web host, we should set the following policy.
- * The policy grants public access for the files. 
+ * To create a bucket as a static web host, we should set the following policy.
+ * The policy grants public access to the files. 
  */
 const bucketPolicy: aws.iam.PolicyDocument = {
   Version: '2012-10-17',
@@ -28,7 +28,7 @@ const bucketPolicy: aws.iam.PolicyDocument = {
 
 /**
  * Bucket's web site configuration
- * Here we set the html index file name and the html used if an error occurrs.
+ * Here we set the HTML index file and the HTML error file used if an error occurs.
  */
 const website: aws.types.input.s3.BucketWebsite = {
   indexDocument: 'index.html',
@@ -38,7 +38,7 @@ const website: aws.types.input.s3.BucketWebsite = {
 /**
  * These are the arguments used to create the bucket.
  * We set how the bucket should be created. With which policy, name, and other configurations.
- * All the options availables are documented in Pulumi's web site.
+ * All the options available are documented on Pulumi's website.
  */
 const bucketArgs: BucketArgs = {
   bucket: bucketName,
@@ -47,18 +47,18 @@ const bucketArgs: BucketArgs = {
 };
 
 /**
- * Here we create the Bucket
+ * Here we create the Bucket.
  */
 const webSiteBucket = new aws.s3.Bucket(bucketName, bucketArgs);
 
 /**
- * Gets all the files that will be uploaded to the S3 bucket
+ * Gets all the files that will be uploaded to the S3 bucket.
  */
 const buildFileManager: IFilesManager = new FilesManager('../source');
 
 /**
- * Builds an S3 Bucket Object from each IFile object
- * This step will upload the files to the S3 bucket
+ * Builds an S3 Bucket Object from each IFile object.
+ * This step will upload the files to the S3 bucket.
  */
 buildFileManager.getFiles().forEach((file: IFile): void => {
   const { contentType, filePath, key, fileName } = file;
@@ -73,7 +73,7 @@ buildFileManager.getFiles().forEach((file: IFile): void => {
 
 /**
  * This export will be used as an output in the console.
- * Since the bucket will be created to be used a static web site host, we build the bucket URL.
+ * Since the bucket will be created to be used as a static website host, we build the bucket URL.
  * This value will be displayed in the console after the `pulumi up` command finishes.
  */
 export const bucketURL = pulumi.interpolate`${bucketName}.${webSiteBucket.websiteDomain}`;

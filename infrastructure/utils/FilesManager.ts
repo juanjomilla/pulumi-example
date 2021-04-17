@@ -51,13 +51,13 @@ export class FilesManager implements IFilesManager {
    * @returns A IFile element to be used as an S3 bucket object
    */
   private processFile = (relativePath: string): IFile => {
-    const buildFile: IFile  = {
+    const file: IFile  = {
       contentType: mime.getType(relativePath),
       fileName: relativePath.replace(/\.\.\\/g, '').replace(/\\/g, '-'),
       key: relativePath.replace(`${this.buildPath}/`, '').replace(/\\/g, '/'),
       filePath: relativePath,
     };
 
-    return buildFile;
+    return file;
   };
 }
