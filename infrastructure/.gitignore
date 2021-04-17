@@ -1,0 +1,5 @@
+/bin/
+/node_modules/
+
+# Ignore Mac OS files
+.DS_Store
